@@ -1,5 +1,4 @@
 import sys
-#sys.path.append('/nethome/druiter/code/simpletransformers/')
 from simpletransformers.classification import (
     ClassificationModel)
 import pandas as pd
@@ -14,7 +13,6 @@ import json
 import math
 from pathlib import Path
 
-print("BERT sat pmi")
 # Input
 train = sys.argv[1]
 valid = sys.argv[2]
@@ -31,7 +29,7 @@ model_args["use_early_stopping"] = True
 model_args["early_stopping_delta"] = 0.01
 model_args["early_stopping_metric"] = 'mcc'
 model_args["early_stopping_metric_minimize"] = False
-model_args["early_stopping_patience"] = 3 # 10
+model_args["early_stopping_patience"] = 3 
 model_args["evaluate_during_training_steps"] = 1000
 model_args["save_eval_checkpoints"] = False
 model_args["use_cuda"] = True
@@ -76,10 +74,8 @@ test_df_ar = test_df_ar.sample(frac=1).reset_index(drop=True)
 
 accs_en = []
 f1s_en = []
-aucs_en = []
 accs_ar = []
 f1s_ar = []
-aucs_ar = []
 for i in range(0,10):
     # Prepare cross validation
     # Setup
@@ -124,24 +120,20 @@ for i in range(0,10):
                                                                acc=accuracy_score,
                                                                f1_macro=f1_score_macro,
                                                                f1_micro=f1_score_micro)
-                                                               #auc=roc_auc_score)
     print(result, flush=True)
 
     accs_en.append(result['acc'])
     f1s_en.append(result['f1_macro'])
-    #aucs_en.append(result['auc'])
 
     result, model_outputs, wrong_predictions = model.eval_model(test_df_ar,
                                                                 cm=confusion_matrix,
                                                                acc=accuracy_score,
                                                                f1_macro=f1_score_macro,
                                                                f1_micro=f1_score_micro)
-                                                               #auc=roc_auc_score)
     print(result, flush=True)
 
     accs_ar.append(result['acc'])
     f1s_ar.append(result['f1_macro'])
-    #aucs_ar.append(result['auc'])
 
 def avg(lst):
     return sum(lst) / len(lst)
@@ -154,14 +146,9 @@ f1_stdev_en = statistics.stdev(f1s_en)
 f1_avg_en = avg(f1s_en)
 f1_se_en = f1_stdev_en/math.sqrt(10)
 
-#auc_stdev_en = statistics.stdev(aucs_en)
-#auc_avg_en = avg(aucs_en)
-#auc_se_en = auc_stdev_en/math.sqrt(10)
-
 print("Results for: EN")
 print('Acc... Mean: {}\tStandard Deviaton: {}\tStandard Error: {}'.format(acc_avg_en, acc_stdev_en, acc_se_en))
 print('F1 Macro... Mean: {}\tStandard Deviaton: {}\tStandard Error: {}'.format(f1_avg_en, f1_stdev_en, f1_se_en))
-#print('AUC... Mean: {}\tStandard Deviaton: {}\tStandard Error: {}'.format(auc_avg_en, auc_stdev_en, auc_se_en))
 
 acc_stdev_ar = statistics.stdev(accs_ar)
 acc_avg_ar = avg(accs_ar)
@@ -171,11 +158,6 @@ f1_stdev_ar = statistics.stdev(f1s_ar)
 f1_avg_ar = avg(f1s_ar)
 f1_se_ar = f1_stdev_ar/math.sqrt(10)
 
-#auc_stdev_ar = statistics.stdev(aucs_ar)
-#auc_avg_ar = avg(aucs_ar)
-#auc_se_ar = auc_stdev_ar/math.sqrt(10)
-
 print("Results for: AR")
 print('Acc... Mean: {}\tStandard Deviaton: {}\tStandard Error: {}'.format(acc_avg_ar, acc_stdev_ar, acc_se_ar))
 print('F1 Macro... Mean: {}\tStandard Deviaton: {}\tStandard Error: {}'.format(f1_avg_ar, f1_stdev_ar, f1_se_ar))
-#print('AUC... Mean: {}\tStandard Deviaton: {}\tStandard Error: {}'.format(auc_avg_ar, auc_stdev_ar, auc_se_ar))

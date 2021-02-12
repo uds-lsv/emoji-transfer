@@ -1,5 +1,4 @@
 import sys
-#sys.path.append('/nethome/druiter/code/simpletransformers/')
 from simpletransformers.classification import (
     ClassificationModel)
 import pandas as pd
@@ -13,7 +12,6 @@ import string
 import json
 import math
 
-print("BERT germeval swear")
 # Input
 train = sys.argv[1]
 valid = sys.argv[2]
@@ -30,7 +28,7 @@ model_args["use_early_stopping"] = True
 model_args["early_stopping_delta"] = 0.01
 model_args["early_stopping_metric"] = 'mcc'
 model_args["early_stopping_metric_minimize"] = False
-model_args["early_stopping_patience"] = 3 # 10
+model_args["early_stopping_patience"] = 3 
 model_args["evaluate_during_training_steps"] = 1000
 model_args["save_eval_checkpoints"] = False
 model_args["use_cuda"] = True
@@ -115,13 +113,11 @@ for i in range(0,10):
                                                                 cm=confusion_matrix,
                                                                acc=accuracy_score,
                                                                f1_macro=f1_score_macro,
-                                                               f1_micro=f1_score_micro,
-                                                               auc=roc_auc_score)
+                                                               f1_micro=f1_score_micro)
     print(result, flush=True)
 
     accs.append(result['acc'])
     f1s.append(result['f1_macro'])
-    aucs.append(result['auc'])
 
 def avg(lst):
     return sum(lst) / len(lst)
@@ -134,10 +130,5 @@ f1_stdev = statistics.stdev(f1s)
 f1_avg = avg(f1s)
 f1_se = f1_stdev/math.sqrt(10)
 
-auc_stdev = statistics.stdev(aucs)
-auc_avg = avg(aucs)
-auc_se = auc_stdev/math.sqrt(10)
-
 print('Acc... Mean: {}\tStandard Deviaton: {}\tStandard Error: {}'.format(acc_avg, acc_stdev, acc_se))
 print('F1 Macro... Mean: {}\tStandard Deviaton: {}\tStandard Error: {}'.format(f1_avg, f1_stdev, f1_se))
-print('AUC... Mean: {}\tStandard Deviaton: {}\tStandard Error: {}'.format(auc_avg, auc_stdev, auc_se))
