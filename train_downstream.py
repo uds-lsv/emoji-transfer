@@ -9,7 +9,7 @@ import torch
 
 def main():
     if len(sys.argv) != 5:
-        print('Usage: python simple_transformers.py <model architecture> <model name or path> <data_path> <args>', file=sys.stderr)
+        print('Usage: python train_downstream.py <model architecture> <model name or path> <data_path> <args>', file=sys.stderr)
         sys.exit(1)
     logging.basicConfig(format='%(asctime)s - %(levelname)s - %(name)s -   %(message)s',
                         datefmt='%m/%d/%Y %H:%M:%S',
