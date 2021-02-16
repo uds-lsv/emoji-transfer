@@ -1,0 +1,12 @@
+{   "reprocess_input_data": true, 
+    "output_dir": "bert_mono_emoji_prediction", 
+    "best_model_dir": "bert_mono_emoji_prediction/best_model", 
+    "overwrite_output_dir": true, 
+    "num_train_epochs": 10, 
+    "evaluate_during_training" : true, 
+    "evaluate_during_training_steps": 6000, 
+    "evaluate_during_training_verbose": true, 
+    "save_steps": 6000, 
+    "use_early_stopping" : false,
+    "fp16": false
+}

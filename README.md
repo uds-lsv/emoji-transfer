@@ -8,11 +8,16 @@ Train a pretrained LM on emoji prediction or emoji cluster prediction
 
 python train_pretraining.py <model architecture> <model name or path> <path to train/test data> <args>
 
+- model architecture: "bert" or "xlmroberta"
+- model name or path: bert-base-german-cased for German BERT (monolingual), bert-base-multilingual cased or xlm-roberta-base
+- path to the dataset: must contain a classes.txt with the labels, a train, validation and test set in tsv format
+- args: json file with model parameters (please refer to the example_args.json)
+
 ## train_downstream
 
-Train an emoji prediction or emoji cluster prediction  on a downstream task 
+Train an emoji (cluster) predictor on a downstream task 
 
- python train_downstream.py <model architecture> <model name or path> <path to train/test data> <args>
+python train_downstream.py <model architecture> <model name or path> <path to train/test data> <args>
 
 ## train_bert.delta
 
