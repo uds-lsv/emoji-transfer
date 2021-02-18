@@ -1,6 +1,20 @@
 # emoji-transfer
 
-UNDER CONSTRUCTION
+This is the repository for Emoji-Based Transfer Learning for Sentiment Tasks.
+https://arxiv.org/abs/2102.06423
+
+## Requirements
+
+- Install pytorch (https://pytorch.org/)
+- Install the simple transformers library(https://pypi.org/project/simpletransformers/): 
+pip install simpletransformers
+- Install scikit learn (https://scikit-learn.org/stable/install.html)
+
+## DATA
+
+Datasets to train an LM on emoji (cluster) prediction can be found below.
+
+https://repos.lsv.uni-saarland.de/sboy/emoji-transfer-data
 
 ## train_pretraining
 
@@ -25,9 +39,5 @@ Train an emoji prediction or emoji cluster prediction 10 times on a downstream t
 
 python train_bert.delta.py germeval/train.tsv germeval/val.tsv germeval/test.tsv bert-emoji-prediction 2 bert-emoji-prediction-on-downstream-task
 
-## DATA
-
-Datasets to train an LM on emoji (cluster) prediction can be found below
-
-https://repos.lsv.uni-saarland.de/sboy/emoji-transfer-data
-
+## Contact
+If you have questions feel free to contact me: susannb@coli.uni-saarland.de
